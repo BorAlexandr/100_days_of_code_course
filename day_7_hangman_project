@@ -1,4 +1,6 @@
 #This is 7 day of 100 challenge 100 days of code cource, in this project i create a programm game hangman
+# Sorry for long code, but at now i dont know how to creat package files on github
+# i will creat pretty when i study it
 
 import random
 #from replit import clear
