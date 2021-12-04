@@ -1,0 +1,33 @@
+#from replit import clear
+#HINT: You can call clear() to clear the output in the console.
+logo = '''
+                         ___________
+                         \         /
+                          )_______(
+                          |"""""""|_.-._,.---------.,_.-._
+                          |       | | |               | | ''-.
+                          |       |_| |_             _| |_..-'
+                          |_______| '-' `'---------'` '-'
+                          )"""""""(
+                         /_________\\
+                       .-------------.
+                      /_______________\\
+'''
+print(logo)
+flag = True
+player_dict = {}
+winner = ''
+max_bid = 0
+while flag:
+  name = input("What is your name: ")
+  bid = int(input("What is your bid $"))
+  answer = input("Are there other bidders. type yes or no").lower()
+  player_dict[name] = bid
+  flag = True if answer == "yes" else False
+  if flag:
+    clear()
+for name, bid in player_dict.items():
+  if bid == max(player_dict.values()):
+    winner += name
+    max_bid = bid
+print(f"The winner is {winner} with a bid of ${max_bid}")
