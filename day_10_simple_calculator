@@ -1,0 +1,77 @@
+logo = """
+ _____________________
+|  _________________  |
+| | Pythonista   0. | |  .----------------.  .----------------.  .----------------.  .----------------. 
+| |_________________| | | .--------------. || .--------------. || .--------------. || .--------------. |
+|  ___ ___ ___   ___  | | |     ______   | || |      __      | || |   _____      | || |     ______   | |
+| | 7 | 8 | 9 | | + | | | |   .' ___  |  | || |     /  \     | || |  |_   _|     | || |   .' ___  |  | |
+| |___|___|___| |___| | | |  / .'   \_|  | || |    / /\ \    | || |    | |       | || |  / .'   \_|  | |
+| | 4 | 5 | 6 | | - | | | |  | |         | || |   / ____ \   | || |    | |   _   | || |  | |         | |
+| |___|___|___| |___| | | |  \ `.___.'\  | || | _/ /    \ \_ | || |   _| |__/ |  | || |  \ `.___.'\  | |
+| | 1 | 2 | 3 | | x | | | |   `._____.'  | || ||____|  |____|| || |  |________|  | || |   `._____.'  | |
+| |___|___|___| |___| | | |              | || |              | || |              | || |              | |
+| | . | 0 | = | | / | | | '--------------' || '--------------' || '--------------' || '--------------' |
+| |___|___|___| |___| |  '----------------'  '----------------'  '----------------'  '----------------' 
+|_____________________|
+"""
+
+
+def add(n_1, n_2):
+  return n_1 + n_2
+
+
+def subtract(n_1, n_2):
+  return n_1 - n_2
+
+
+def multiply(n_1, n_2):
+  return n_1 * n_2
+
+
+def divide(n_1, n_2):
+  return n_1 / n_2
+
+
+def show_operation():
+  for i in operations:
+    print(i)
+
+
+operations = {
+  "+" : add,
+  "-" : subtract,
+  "*" : multiply,
+  "/" : divide
+}
+
+def calculator():
+  print(logo)
+  
+  num_1 = float(input("What is the first number: "))
+  
+  show_operation()
+  
+  operation_symbol = input("Pick an operation from the line above:\n")
+  num_2 = float(input("What is the second number: "))
+  answer = operations[operation_symbol](num_1, num_2)
+  print(f"{num_1} {operation_symbol} {num_2} = {answer}")
+  
+  check_next_operation = input(f"Type 'y' to continue calculation with {answer}, or type 'clear' to continue with clear window, or type 'n' to exit: ").lower()
+  if check_next_operation == 'clear':
+      calculator()
+
+  while check_next_operation == "y":
+    total = answer
+    show_operation()
+    operation_symbol = input("Pick an operation: ")
+    num_3 = float(input("What is the next number: "))
+    answer = operations[operation_symbol](total, num_3)
+    
+    print(f"{total} {operation_symbol} {num_3} = {answer}")
+    
+    check_next_operation = input(f"Type 'y' to continue calculation with {answer},or type 'clear' to continue with clear window, or type 'n' to exit: ").lower()
+    
+    if check_next_operation == 'clear':
+      calculator()
+
+calculator()
