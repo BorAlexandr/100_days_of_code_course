@@ -1,0 +1,110 @@
+#While not optimization code, but it work:)
+
+import random
+
+
+def mix_cards(cards):
+    return [random.choice(cards), random.choice(cards)]
+
+
+def add_card(cards):
+    return random.choice(cards)
+
+
+cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+user_answer = "y"
+
+while user_answer == "y":
+    users_cards = mix_cards(cards)
+    users_score = sum(users_cards)
+    dilers_cards = mix_cards(cards)
+    dilers_score = sum(dilers_cards)
+    print(f"Your cards: {users_cards}, final score: {users_score}")
+    print(f"Dilers first card {dilers_cards[0]}")
+    if users_score == 21:
+        if dilers_score == 21:
+            print("draw")
+        elif dilers_score > 16:
+            print(f"You win with blackjack, computer score {dilers_score}")
+        else:
+            while dilers_score < 17:
+                dilers_cards.append(add_card(cards))
+                dilers_score += dilers_cards[-1]
+            if dilers_score == 21:
+                print("draw")
+            else:
+                print(f"You win with blackjack, dilers score {dilers_score}")
+    else:
+        check_add_card = input("Type 'y' to get another card, type 'n' to pass: ").lower()
+        if check_add_card == "y":
+            while check_add_card == "y":
+                users_cards.append(add_card(cards))
+                users_score += users_cards[-1]
+                if users_score > 21:
+                    check_add_card = "n"
+                    print(f"You lose, your score {users_score}")
+                    print(f"dilers score {dilers_score}")
+                else:
+                    print(f"Your score is {users_score}")
+                    check_add_card = input("Type 'y' to get another card, type 'n' to pass: ").lower()
+
+            if check_add_card == "n":
+                if dilers_score == users_score:
+                    print(f"Draw, your score {users_score} \n computer score {dilers_score}")
+                else:
+                    while dilers_score < 17:
+                        dilers_cards.append(add_card(cards))
+                        dilers_score += dilers_cards[-1]
+                        print(f"diller score {dilers_score}")
+                        if dilers_score == 21:
+                            if users_score == 21:
+                                print(f"Draw, your score {users_score} \n computer score {dilers_score}")
+                            else:
+                                print(f"Diller win with score {dilers_score}")
+                                print(f"Your score {users_score}")
+                        elif dilers_score > 21:
+                            print(f"You win with score {users_score}\n computer score {dilers_score}")
+                        else:
+                            if users_score > dilers_score:
+                                print(f"You win your score {users_score}")
+                                print(f"diller score {dilers_score}")
+                            elif users_score == dilers_score:
+                                print(f"Draw, your score {users_score} \n computer score {dilers_score}")
+                            else:
+                                print(f"diler win with score {dilers_score}")
+                                print(f"Your score {users_score}")
+
+        elif check_add_card == "n":
+            if dilers_score == 21:
+                print(f"You lose, diler win with blackjack, his score {dilers_score} ")
+                print(f"Your score {users_score}")
+            elif dilers_score > 16:
+                if users_score > dilers_score:
+                    print(f"You win your score {users_score}")
+                    print(f"diller score {dilers_score}")
+                elif users_score == dilers_score:
+                    print(f"Draw, your score {users_score} \n computer score {dilers_score}")
+                else:
+                    print(f"diler win with score {dilers_score}")
+                    print(f"Your score {users_score}")
+            else:
+                while dilers_score < 17:
+                    dilers_cards.append(add_card(cards))
+                    dilers_score += dilers_cards[-1]
+                    print(f"diller score {dilers_score}")
+                if dilers_score == 21:
+                    print(f"Diller win with score {dilers_score}")
+                    print(f"Your score {users_score}")
+                elif dilers_score > 21:
+                    print(f"You win with score {users_score}\n computer score {dilers_score}")
+                else:
+                    if users_score > dilers_score:
+                        print(f"You win your score {users_score}")
+                        print(f"diller score {dilers_score}")
+                    elif users_score == dilers_score:
+                        print(f"Draw, your score {users_score} \n computer score {dilers_score}")
+                    else:
+                        print(f"diler win with score {dilers_score}")
+                        print(f"Your score {users_score}")
+
+    user_answer = input("Do you want to play a game of Blackjack? Type 'y' or 'n': ")
