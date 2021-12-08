@@ -1,0 +1,77 @@
+import random
+
+logo = """
+.------.            _     _            _    _            _    
+|A_  _ |.          | |   | |          | |  (_)          | |   
+|( \/ ).-----.     | |__ | | __ _  ___| | ___  __ _  ___| | __
+| \  /|K /\  |     | '_ \| |/ _` |/ __| |/ / |/ _` |/ __| |/ /
+|  \/ | /  \ |     | |_) | | (_| | (__|   <| | (_| | (__|   < 
+`-----| \  / |     |_.__/|_|\__,_|\___|_|\_\ |\__,_|\___|_|\_\\
+      |  \/ K|                            _/ |                
+      `------'                           |__/           
+"""
+
+def mix_cards(cards):
+    return [random.choice(cards), random.choice(cards)]
+
+
+def add_card_user():
+    return random.choice(cards)
+
+cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+user_answer = "y"
+
+def blackjack():
+    user_cards, diler_cards = mix_cards(cards), mix_cards(cards)
+    print(f"Your cards: {user_cards}, current score: {sum(user_cards)}\nComputer's first card: {diler_cards[0]}")
+
+    if sum(user_cards) == 21 and sum(diler_cards) == 21:
+        return f"Draw, your cards {user_cards} sum: {sum(user_cards)}\ncomputer cards {diler_cards} sum{sum(diler_cards)}"
+    else:
+        get_card = True
+        while get_card:
+            check_add_card = input("Type 'y' to get another card, type 'n' to pass: ").lower()
+            if check_add_card == "y":
+                new_card = add_card_user()
+                if new_card == 11 and sum(user_cards) + new_card > 21:
+                    user_cards.append(1)
+                else:
+                    user_cards.append(new_card)
+
+                print(f"Your cards: {user_cards}, current score: {sum(user_cards)}")
+                if sum(user_cards) > 21:
+                    while sum(diler_cards) < 17:
+                        new_card_diler = add_card_user()
+                        if new_card_diler == 11 and sum(diler_cards) + new_card_diler > 21:
+                            diler_cards.append(1)
+                        else:
+                            diler_cards.append(new_card_diler)
+                    return f"You lose, Your final cards {user_cards}, final score {sum(user_cards)}\nComputer final card {diler_cards}, final score {sum(diler_cards)}"
+            else:
+                print(f"Your cards: {user_cards}, current score: {sum(user_cards)}")
+                while sum(diler_cards) < 17:
+                    new_card_diler = add_card_user()
+                    if new_card_diler == 11 and sum(diler_cards) + new_card_diler > 21:
+                        diler_cards.append(1)
+                    else:
+                        diler_cards.append(new_card_diler)
+                print(f"computer cards: {diler_cards}, current score: {sum(diler_cards)}")
+                get_card = False
+
+    if sum(user_cards) == sum(diler_cards):
+        res = f"Draw, Your final cards {user_cards}, final score {sum(user_cards)}\nComputer final card {diler_cards}, final score {sum(diler_cards)}"
+    elif sum(user_cards) == 21 and sum(diler_cards) < 21:
+        res = f"You win with blackjack, Your final cards {user_cards}, final score {sum(user_cards)}\nComputer final card {diler_cards}, final score {sum(diler_cards)}"
+    elif sum(user_cards) > 21:
+        res = f"You lose, Your final cards {user_cards}, final score {sum(user_cards)}\nComputer final card {diler_cards}, final score {sum(diler_cards)}"
+    elif sum(user_cards) <= 21 and sum(user_cards) > sum(diler_cards):
+        res = f"You win, Your final cards {user_cards}, final score {sum(user_cards)}\nComputer final card {diler_cards}, final score {sum(diler_cards)}"
+    else:
+        res = f"You lose, Your final cards {user_cards}, final score {sum(user_cards)}\nComputer final card {diler_cards}, final score {sum(diler_cards)}"
+    return res
+
+check_play = input(""Do you want to play a game of Blackjack? Type 'y' or 'n': "")
+while check_play == 'y':
+  print(logo)
+  print(blackjack())
+  check_play = input(""Do you want to play a game of Blackjack? Type 'y' or 'n': "")
