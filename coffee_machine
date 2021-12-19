@@ -1,0 +1,94 @@
+MENU = {
+    "espresso": {
+        "ingredients": {
+            "water": 50,
+            "coffee": 18,
+        },
+        "cost": 1.5,
+    },
+    "latte": {
+        "ingredients": {
+            "water": 200,
+            "milk": 150,
+            "coffee": 24,
+        },
+        "cost": 2.5,
+    },
+    "cappuccino": {
+        "ingredients": {
+            "water": 250,
+            "milk": 100,
+            "coffee": 24,
+        },
+        "cost": 3.0,
+    }
+}
+
+resources = {
+    "water": 300,
+    "milk": 200,
+    "coffee": 100,
+}
+
+
+def make_coffee(type_coffee):
+    if type_coffee == "espresso":
+        resources["water"] -= MENU["espresso"]["ingredients"]["water"]
+        resources["coffee"] -= MENU["espresso"]["ingredients"]["coffee"]
+        if resources["water"] < 0 or resources["coffee"] < 0:
+            end_resourse = [key for key, value in resources.items() if value < 0]
+            print(f"Sorry there is not enough {end_resourse}")
+        else:
+            print(f"Here is your {type_coffee}")
+
+    else:
+        resources["water"] -= MENU[type_coffee]["ingredients"]["water"]
+        resources["coffee"] -= MENU[type_coffee]["ingredients"]["coffee"]
+        resources["milk"] -= MENU[type_coffee]["ingredients"]["milk"]
+        if resources["water"] < 0 or resources["coffee"] < 0 or resources["milk"]:
+            end_resourse = [key for key, value in resources.items() if value < 0]
+            print(f"Sorry there is not enough {end_resourse}")
+        else:
+            print(f"Your coffee {type_coffee}")
+
+def take_coins():
+    print("Please insert coins.")
+    quarter = int(input("How many quarter: ")) * 0.25
+    dime = int(input("How many quarter: ")) * 0.10
+    nickel = int(input("How many quarter: ")) * 0.05
+    penny = int(input("How many quarter: ")) * 0.01
+    return quarter + dime + nickel + penny
+
+def odd_money(money, coffee):
+    if money == MENU[coffee]["cost"]:
+        return 0
+    else:
+        return money - MENU[coffee]["cost"]
+
+
+def report():
+    print("water: " + str(resources["water"]),
+          "milk: " + str(resources["milk"]),
+          "coffee: " + str(resources["coffee"]), sep="\n")
+
+
+coffee_is_not_ready = True
+
+while coffee_is_not_ready:
+    user_answer = input("What would you like? (espresso/latte/cappuccino): ").lower()
+    if user_answer == "report":
+        report()
+    else:
+        user_money = take_coins()
+        money_in_change = odd_money(user_money, user_answer)
+        if money_in_change:
+            print(f"Here is {odd_money(user_money, user_answer)} in change")
+            make_coffee(user_answer)
+        elif money_in_change == 0:
+            make_coffee(user_answer)
+        else:
+            print("Sorry there is not enough money")
+
+
+
+
