@@ -1,0 +1,36 @@
+import turtle
+from turtle import Turtle, Screen
+import random
+import colorgram
+
+Screen().setup(width=500, height=400)
+race_is_on = False
+user_answer = turtle.textinput(title="What's your bid", prompt="What color is winner? ")
+colors = ["blue", "green", "yellow", "orange", "red"]
+names = ["wimmy", "emmy", "qimmy", "rimmy", "timmy"]
+y_pos = [-80, -40, 0, 40, 80]
+turtles = []
+
+
+
+for turtle_index in range(5):
+    name = names[turtle_index]
+    name = Turtle(shape="turtle")
+    name.color(colors[turtle_index])
+    name.penup()
+    name.goto(x=-230, y=y_pos[turtle_index])
+    name.pendown()
+    turtles.append(name)
+
+if user_answer:
+    race_is_on = True
+    while race_is_on:
+        for turtle in turtles:
+            value_go = random.randint(0, 10)
+            turtle.forward(value_go)
+            if turtle.xcor() >= 230:
+                if turtle.pencolor() == user_answer:
+                    print(f"You win. Trurtle color is {turtle.pencolor()}. Your answer is {user_answer}")
+                else:
+                    print(f"You lose. Win trurtle color is {turtle.pencolor()}. Your answer is {user_answer}")
+                race_is_on = False
